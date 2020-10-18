@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1 class='title is-1'>Code Haven Sticker Sheet</h1>
+    {% for class in classrooms %}
+    <div>
+        <a href='/class/{{class.classCode}}'>{{class.classInfo.teacher}} | {{class.classInfo.school}}<a>
+    </div>
+    {% endfor %}
+    
+{% endblock %}
