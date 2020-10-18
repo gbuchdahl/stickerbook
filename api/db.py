@@ -24,6 +24,7 @@ class Team:
     # positive to increase stickers, negative to decrease stickers
     def change_stickers(self, delta: int):
         self.num_stickers += delta
+        persist_stickers(self.team_id, self.num_stickers)
 
 
 class Classroom:
@@ -73,3 +74,8 @@ def get_teams(class_id: str) -> List[Team]:
         team_arr.append(team)
 
     return team_arr
+
+
+def persist_stickers(team_id: str, stickers: int) -> None:
+    mongo.db.teams.update_one({"team_id": team_id}, {"stickers": stickers})
+    return
