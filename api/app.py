@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_basicauth import BasicAuth
 from db import mongo, Classroom
-
+from bson.json_util import dumps
 
 # user: user, pass: pass
 def create_app():
@@ -27,6 +27,21 @@ def home():
     classroom.add_team("Gabe", ["Jeremy", "Alex"])
     classrooms = mongo.db.classrooms.find({})
     return render_template("index.html", classrooms=classrooms)
+
+
+@app.route("/classrooms")
+def classrooms():
+    classroom_json = []
+    if mongo.db.classrooms.find({}):
+        for cr in mongo.db.classrooms.find({}):
+            classroom_json.append(
+                {
+                    "classLead": cr["classLead"],
+                    "classInfo": cr["classInfo"],
+                    "classCode": cr["classCode"],
+                }
+            )
+    return dumps(classroom_json)
 
 
 @app.route("/admin", methods=["GET", "POST"])
