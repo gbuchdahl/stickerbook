@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from flask_basicauth import BasicAuth
 from db import mongo, Classroom
-from bson.json_util import dumps
+from bson.json_util import dumps, loads
 
 # user: user, pass: pass
 def create_app():
@@ -47,25 +47,49 @@ def classrooms():
 @app.route("/admin", methods=["GET", "POST"])
 @basic_auth.required
 def admin():
-    if request.method == "POST":
-        # changeStickers(request.form["classCode"], request.form["amount"])
-        for key, value in request.form.items():
-            print(f"key: {key}, value: {value}")
-        changeStickers
-        print(request.form.get("classCode"))
-        changeStickers(
-            request.form.get("classCode"), int(request.form.get("amount")), mongo
-        )
-
-    classrooms = mongo.db.classrooms.find({})
-    return render_template("admin.html", classrooms=classrooms)
+    return dumps({"auth": True})
 
 
-@app.route("/class/<class_code>")
-def classroomPage(class_code):
-    classroom = mongo.db.classrooms.find_one_or_404({"classCode": class_code})
-    return render_template(
-        "classroom.html",
-        class_info=classroom["classInfo"],
-        stickers=classroom["stickers"],
+@app.route("/teams/<class_code>")
+def getTeams(class_code):
+    teams = []
+    if teams_res := mongo.db.teams.find({"classCode": class_code}):
+        for team in teams_res:
+            teams.append(
+                {
+                    "mentor": team["mentor"],
+                    "teamName": team["teamName"],
+                    "stickers": team["stickers"],
+                    "students": team["students"],
+                    "teamId": team["teamId"],
+                }
+            )
+
+    return dumps(teams)
+
+
+@app.route("/teams/update/<team_id>", methods=["POST"])
+def updateTeam(team_id):
+    mongo.db.teams.update_one({"teamId": team_id}, {"$inc": {"stickers": 1}})
+    return {}
+
+
+@app.route("/teams/add", methods=["POST"])
+def addTeam():
+    print(loads(request.data))
+    data = loads(request.data)
+    mentor = data["mentorName"]
+    team_name = data["teamName"]
+    team_id = data["teamId"]
+    class_code = data["classCode"]
+    mongo.db.teams.insert_one(
+        {
+            "teamId": team_id,
+            "mentor": mentor,
+            "teamName": team_name,
+            "classCode": class_code,
+            "stickers": 0,
+            "students": [],
+        }
     )
+    return {}
