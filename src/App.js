@@ -3,6 +3,7 @@ import axios from 'axios'
 import _ from 'lodash'
 import ClassroomList from './ClassroomList';
 import Classroom from './Classroom'
+import './App.css'
 
 function App() {
 
@@ -44,15 +45,21 @@ function App() {
   }
 
   return (
-    <div className="section">
-      <div className='container'>
-        <div className='columns is-align-content-center is-flex-direction-row is-justify-content-space-between'>
-          <h1 className='title is-size-1'>Code Haven Sticker Sheet</h1>
-          <p onClick={() => authenticate()} className='button'>{isAuthenticated ? 'Log Out' : 'Admin'}</p>
+    <div>
+      <div className="section hero">
+        <div className='container'>
+          <div className='columns is-align-content-center is-flex-direction-row is-justify-content-space-between'>
+            <h1 className='title is-size-1'>Code Haven Sticker Sheet</h1>
+            <p onClick={() => authenticate()} className='button'>{isAuthenticated ? 'Log Out' : 'Admin'}</p>
+          </div>
+          <ClassroomList className='pt-4' setCurrent={setCurrentClassroom} classrooms={classrooms} currentClassroom={currentClassroom} />
         </div>
-        <ClassroomList className='pt-4' setCurrent={setCurrentClassroom} classrooms={classrooms} currentClassroom={currentClassroom} />
-        <Classroom authenticated={isAuthenticated} classCode={currentClassroom} getClassInfo={getClassInfo}></Classroom>
       </div>
+      <div className='section'>
+        <div className='container'>
+          <Classroom authenticated={isAuthenticated} classCode={currentClassroom} getClassInfo={getClassInfo}></Classroom>
+        </div >
+      </div >
     </div>
   );
 }

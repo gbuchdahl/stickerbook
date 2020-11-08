@@ -2,12 +2,16 @@ from flask import Flask, render_template, request
 from flask_basicauth import BasicAuth
 from db import mongo, Classroom
 from bson.json_util import dumps, loads
+import os
 
 # user: user, pass: pass
 def create_app():
 
-    # app = Flask(__name__)
-    app = Flask(__name__, static_folder="../build", static_url_path="/")
+    app = None
+    if os.getenv("ENV") == "DEV":
+        app = Flask(__name__)
+    else:
+        app = Flask(__name__, static_folder="../build", static_url_path="/")
 
     app.config[
         "MONGO_URI"

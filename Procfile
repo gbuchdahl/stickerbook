@@ -1,2 +1,2 @@
-web: cd api; gunicorn wsgi:app
+web: (ENV=PROD; cd api; gunicorn wsgi:app)
 
