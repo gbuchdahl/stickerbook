@@ -12,8 +12,8 @@ def create_app():
     app.config[
         "MONGO_URI"
     ] = "mongodb+srv://user:pass@stickerbook.zqj1y.mongodb.net/stickerbook?retryWrites=true&w=majority"
-    app.config["BASIC_AUTH_USERNAME"] = "codehaven"
-    app.config["BASIC_AUTH_PASSWORD"] = "mrcashmoneyduan"
+    app.config["BASIC_AUTH_USERNAME"] = "user"
+    app.config["BASIC_AUTH_PASSWORD"] = "pass"
     mongo.init_app(app)
     return app
 
