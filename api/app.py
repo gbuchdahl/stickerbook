@@ -73,7 +73,7 @@ def getTeams(class_code):
 @app.route("/teams/update/<team_id>", methods=["POST"])
 def updateTeam(team_id):
     data = loads(request.data)
-    amount = data.amount
+    amount = data["amount"]
     mongo.db.teams.update_one({"teamId": team_id}, {"$inc": {"stickers": amount}})
     return {}
 
