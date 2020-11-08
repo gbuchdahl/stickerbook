@@ -12,6 +12,7 @@ const Classroom = (props) => {
     let [showAddTeam, setShowAddTeam] = useState(false)
 
     useEffect(() => {
+        setShowAddTeam(false);
         fetchData();
     }, [classCode, teams])
 
@@ -45,7 +46,6 @@ const Classroom = (props) => {
                 <div className='box'>
                     <p className='has-text-weight-bold is-size-5'>{t.teamName}</p>
                     <p>Mentor: {t.mentor}</p>
-                    <p>Students: {t.students.map((s) => `${s} `)}</p>
                     <div className='mt-5'>
                         <Stickers number={t.stickers}></Stickers>
                     </div>
