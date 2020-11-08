@@ -1,8 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
+import Sticker from './Sticker'
 
 const Stickers = (props) => {
-    const stickers = _.times(props.number, () => <div className='column box is-64x64 is-narrow mx-3'><span role='img'>🥳</span></div>)
+    const stickers = _.times(props.number, () => <Sticker />)
     console.log(stickers)
     return (<div>
         <div className='columns'>

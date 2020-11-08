@@ -6,7 +6,9 @@ from bson.json_util import dumps, loads
 # user: user, pass: pass
 def create_app():
 
-    app = Flask(__name__)
+    # app = Flask(__name__)
+    app = Flask(__name__, static_folder="../build", static_url_path="/")
+
     app.config[
         "MONGO_URI"
     ] = "mongodb+srv://user:pass@stickerbook.zqj1y.mongodb.net/stickerbook?retryWrites=true&w=majority"
@@ -21,12 +23,8 @@ basic_auth = BasicAuth(app)
 
 
 @app.route("/")
-def home():
-    classroom = Classroom("test", "Mr. Colon", "Wednesday", "9am")
-    print("Hello")
-    classroom.add_team("Gabe", ["Jeremy", "Alex"])
-    classrooms = mongo.db.classrooms.find({})
-    return render_template("index.html", classrooms=classrooms)
+def index():
+    return app.send_static_file("index.html")
 
 
 @app.route("/classrooms")
@@ -70,13 +68,14 @@ def getTeams(class_code):
 
 @app.route("/teams/update/<team_id>", methods=["POST"])
 def updateTeam(team_id):
-    mongo.db.teams.update_one({"teamId": team_id}, {"$inc": {"stickers": 1}})
+    data = loads(request.data)
+    amount = data.amount
+    mongo.db.teams.update_one({"teamId": team_id}, {"$inc": {"stickers": amount}})
     return {}
 
 
 @app.route("/teams/add", methods=["POST"])
 def addTeam():
-    print(loads(request.data))
     data = loads(request.data)
     mentor = data["mentorName"]
     team_name = data["teamName"]
@@ -93,3 +92,10 @@ def addTeam():
         }
     )
     return {}
+
+
+@app.route("/teams/delete", methods=["POST"])
+def deleteTeam():
+    data = loads(request.data)
+    team_id = data["teamId"]
+    mongo.db.teams.delete_one({"teamId": team_id})

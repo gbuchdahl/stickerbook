@@ -21,9 +21,9 @@ function App() {
     }
   }
 
-  const getClassroomLinks = (classrooms) => {
-    return classrooms.map((cr) => <p onClick={setCurrentClassroom(cr.classCode)}>{cr.classInfo.teacher}</p>)
-  }
+  // const getClassroomLinks = (classrooms) => {
+  //   return classrooms.map((cr) => <p onClick={setCurrentClassroom(cr.classCode)}>{cr.classInfo.teacher}</p>)
+  // }
 
   const authenticate = async () => {
     if (!isAuthenticated) {
@@ -50,7 +50,7 @@ function App() {
           <h1 className='title is-size-1'>Code Haven Sticker Sheet</h1>
           <p onClick={() => authenticate()} className='button'>{isAuthenticated ? 'Log Out' : 'Admin'}</p>
         </div>
-        <ClassroomList className='pt-4' setCurrent={setCurrentClassroom} classrooms={classrooms} />
+        <ClassroomList className='pt-4' setCurrent={setCurrentClassroom} classrooms={classrooms} currentClassroom={currentClassroom} />
         <Classroom authenticated={isAuthenticated} classCode={currentClassroom} getClassInfo={getClassInfo}></Classroom>
       </div>
     </div>
