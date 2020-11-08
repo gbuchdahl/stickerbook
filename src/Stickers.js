@@ -6,7 +6,7 @@ const Stickers = (props) => {
     const stickers = _.times(props.number, () => <Sticker />)
     console.log(stickers)
     return (<div>
-        <div className='columns'>
+        <div className='columns is-multiline'>
             {stickers.map((s) => s)}
             <div></div>
         </div>
