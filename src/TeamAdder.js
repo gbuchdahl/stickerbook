@@ -13,7 +13,7 @@ const TeamAdder = (props) => {
 
         await axios({
             method: "POST", url: "/teams/add", data: {
-                teamName, mentorName, teamId: `${classCode}${numTeams}`, classCode
+                teamName, mentorName, teamId: `${classCode}${numTeams}-${Math.floor(Math.random()) * 1e3}`, classCode
             }
         })
         setMentorName("")

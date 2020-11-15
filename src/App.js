@@ -46,16 +46,16 @@ function App() {
 
   return (
     <div>
-      <div className="section hero">
+      <div className="section hero px-5">
         <div className='container'>
-          <div className='columns is-align-content-center is-flex-direction-row is-justify-content-space-between'>
+          <div className='mx-3 columns is-align-content-center is-flex-direction-row is-justify-content-space-between'>
             <h1 className='title is-size-1'>Code Haven Sticker Sheet</h1>
             <p onClick={() => authenticate()} className='button'>{isAuthenticated ? 'Log Out' : 'Admin'}</p>
           </div>
           <ClassroomList className='pt-4' setCurrent={setCurrentClassroom} classrooms={classrooms} currentClassroom={currentClassroom} />
         </div>
       </div>
-      <div className='section'>
+      <div className='section px-5'>
         <div className='container'>
           <Classroom authenticated={isAuthenticated} classCode={currentClassroom} getClassInfo={getClassInfo}></Classroom>
         </div >

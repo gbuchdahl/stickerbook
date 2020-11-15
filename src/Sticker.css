@@ -3,7 +3,18 @@
     width: 16px;
     border-radius: 50%;
 	transform: scale(1);
+}
+
+.pulse{
 	animation: pulse 3s infinite;
+}
+
+.pulse5{
+	animation: pulse 5s infinite;
+}
+
+.pulse4{
+	animation: pulse 5s infinite;
 }
 
 @keyframes pulse {
