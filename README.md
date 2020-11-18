@@ -2,8 +2,9 @@
 
 - Frontend - React from `src/`
 - Backend - Flask from `api/`
-- Database - MongoDB
+- Database - MongoDB Atlas
 - Deploy server - Heroku
+- Styling - Bulma
 
 ### Running the project 
 
