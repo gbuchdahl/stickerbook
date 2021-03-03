@@ -3,6 +3,7 @@ from flask_basicauth import BasicAuth
 from db import mongo, Classroom
 from bson.json_util import dumps, loads
 import os
+import random
 
 # user: user, pass: pass
 def create_app():
@@ -87,7 +88,7 @@ def addTeam():
     class_code = data["classCode"]
     mongo.db.teams.insert_one(
         {
-            "teamId": team_id,
+            "teamId": f'team_id-{random.randint(0, 1000)}',
             "mentor": mentor,
             "teamName": team_name,
             "classCode": class_code,
