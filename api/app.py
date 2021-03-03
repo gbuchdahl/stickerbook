@@ -88,7 +88,7 @@ def addTeam():
     class_code = data["classCode"]
     mongo.db.teams.insert_one(
         {
-            "teamId": f'team_id-{random.randint(0, 1000)}',
+            "teamId": f'{team_id}-{random.randint(0, 100000)}',
             "mentor": mentor,
             "teamName": team_name,
             "classCode": class_code,
